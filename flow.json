@@ -1,0 +1,693 @@
+[
+    {
+        "id": "6f3115410f519213",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d3d178a29c8ab5c2",
+        "type": "rpi-srf",
+        "z": "6f3115410f519213",
+        "name": "",
+        "topic": "SRF",
+        "pulse": "0.2",
+        "pins": "8,10",
+        "precision": "0",
+        "x": 70,
+        "y": 100,
+        "wires": [
+            [
+                "75fccb43c3b5f347",
+                "725f510f7ef1aecc"
+            ]
+        ]
+    },
+    {
+        "id": "b115b85036a2b671",
+        "type": "switch",
+        "z": "6f3115410f519213",
+        "name": "Sensor Ativado",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "10",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 180,
+        "wires": [
+            [
+                "3cb267793b3fc530",
+                "694d552ee0048e91"
+            ]
+        ]
+    },
+    {
+        "id": "694d552ee0048e91",
+        "type": "switch",
+        "z": "6f3115410f519213",
+        "name": "Entrada ou saída",
+        "property": "isOcupado",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 490,
+        "y": 180,
+        "wires": [
+            [
+                "df9e17ce25145634",
+                "29ae4fde7f56a5c5"
+            ],
+            [
+                "fc6dc11590dbbe60",
+                "44df962b8ff25166"
+            ]
+        ]
+    },
+    {
+        "id": "df9e17ce25145634",
+        "type": "function",
+        "z": "6f3115410f519213",
+        "name": "Checkout",
+        "func": "global.set('validaCheckout', true);\nglobal.set('isOcupado', false);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 100,
+        "wires": [
+            [
+                "f1f6670f80ae2ada"
+            ]
+        ]
+    },
+    {
+        "id": "f1f6670f80ae2ada",
+        "type": "link out",
+        "z": "6f3115410f519213",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "e97fdf1cf03f8b9a"
+        ],
+        "x": 845,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e97fdf1cf03f8b9a",
+        "type": "link in",
+        "z": "6f3115410f519213",
+        "name": "link in 1",
+        "links": [
+            "f1f6670f80ae2ada"
+        ],
+        "x": 85,
+        "y": 480,
+        "wires": [
+            [
+                "2b4e367d13778bc6"
+            ]
+        ]
+    },
+    {
+        "id": "a6c52324128da03a",
+        "type": "comment",
+        "z": "6f3115410f519213",
+        "name": "Fluxo de verificação de checkout",
+        "info": "",
+        "x": 210,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "754a66997f60640a",
+        "type": "link in",
+        "z": "6f3115410f519213",
+        "name": "link in 2",
+        "links": [
+            "9d0318c8133211a4",
+            "3ac375a6c7490323"
+        ],
+        "x": 85,
+        "y": 640,
+        "wires": [
+            [
+                "0618cd787e8de163",
+                "70d0334b2423f165"
+            ]
+        ]
+    },
+    {
+        "id": "077d080e8929623e",
+        "type": "comment",
+        "z": "6f3115410f519213",
+        "name": "Fluxo de enviar request",
+        "info": "",
+        "x": 200,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "2b4e367d13778bc6",
+        "type": "trigger",
+        "z": "6f3115410f519213",
+        "name": "",
+        "op1": "0",
+        "op2": "1",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "15",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 210,
+        "y": 480,
+        "wires": [
+            [
+                "eda75e097a4b3357"
+            ]
+        ]
+    },
+    {
+        "id": "119c33257e7a335c",
+        "type": "switch",
+        "z": "6f3115410f519213",
+        "name": "Ainda é Checkout",
+        "property": "validaCheckout",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 650,
+        "y": 480,
+        "wires": [
+            [
+                "3eb3eb113324cb70"
+            ]
+        ]
+    },
+    {
+        "id": "3ac375a6c7490323",
+        "type": "link out",
+        "z": "6f3115410f519213",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "754a66997f60640a"
+        ],
+        "x": 925,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "0618cd787e8de163",
+        "type": "http request",
+        "z": "6f3115410f519213",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://us-central1-seminariossi6.cloudfunctions.net/agendar",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 250,
+        "y": 680,
+        "wires": [
+            [
+                "4ed2dd0f947131d0",
+                "5b52ec976c800ad2"
+            ]
+        ]
+    },
+    {
+        "id": "4ed2dd0f947131d0",
+        "type": "debug",
+        "z": "6f3115410f519213",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "135ab35988b82c59",
+        "type": "comment",
+        "z": "6f3115410f519213",
+        "name": "Entra no fluxo de verificar checkout",
+        "info": "",
+        "x": 980,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "0779cb9991fd8674",
+        "type": "comment",
+        "z": "6f3115410f519213",
+        "name": "Envia Request",
+        "info": "",
+        "x": 960,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "3eb3eb113324cb70",
+        "type": "function",
+        "z": "6f3115410f519213",
+        "name": "function 4",
+        "func": "global.set('isOcupado', false);\nglobal.set('validaCheckout', false);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 480,
+        "wires": [
+            [
+                "3ac375a6c7490323"
+            ]
+        ]
+    },
+    {
+        "id": "70d0334b2423f165",
+        "type": "debug",
+        "z": "6f3115410f519213",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 240,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "ccc2b6acb4f69cad",
+        "type": "inject",
+        "z": "6f3115410f519213",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "3cd9ca2a361fd0ab"
+            ]
+        ]
+    },
+    {
+        "id": "3cd9ca2a361fd0ab",
+        "type": "function",
+        "z": "6f3115410f519213",
+        "name": "function 5",
+        "func": "global.set('validaCheckout', false);\nglobal.set('isOcupado', false);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 300,
+        "wires": [
+            [
+                "a211ea69efaaefe9"
+            ]
+        ]
+    },
+    {
+        "id": "ce9ffb6b3cf6ae7f",
+        "type": "debug",
+        "z": "6f3115410f519213",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a211ea69efaaefe9",
+        "type": "change",
+        "z": "6f3115410f519213",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "isOcupado",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 360,
+        "wires": [
+            [
+                "ce9ffb6b3cf6ae7f"
+            ]
+        ]
+    },
+    {
+        "id": "3cb267793b3fc530",
+        "type": "debug",
+        "z": "6f3115410f519213",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"ativou\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "5b52ec976c800ad2",
+        "type": "change",
+        "z": "6f3115410f519213",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "isOcupado",
+                "pt": "global",
+                "to": "payload.dentro",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "75fccb43c3b5f347",
+        "type": "debug",
+        "z": "6f3115410f519213",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 230,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "29ae4fde7f56a5c5",
+        "type": "debug",
+        "z": "6f3115410f519213",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"saida\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "eda75e097a4b3357",
+        "type": "switch",
+        "z": "6f3115410f519213",
+        "name": "Descarta incio do trigger",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 480,
+        "wires": [
+            [
+                "119c33257e7a335c"
+            ]
+        ]
+    },
+    {
+        "id": "725f510f7ef1aecc",
+        "type": "delay",
+        "z": "6f3115410f519213",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "b115b85036a2b671"
+            ]
+        ]
+    },
+    {
+        "id": "fc6dc11590dbbe60",
+        "type": "function",
+        "z": "6f3115410f519213",
+        "name": "Checkin",
+        "func": "global.set('isOcupado', true);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 260,
+        "wires": [
+            [
+                "b0a92c97d7eb535d"
+            ]
+        ]
+    },
+    {
+        "id": "b0a92c97d7eb535d",
+        "type": "switch",
+        "z": "6f3115410f519213",
+        "name": "Verifica Fluxo",
+        "property": "validaCheckout",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 860,
+        "y": 260,
+        "wires": [
+            [
+                "8b5f1f0e95e68ac5",
+                "c4703e2ac5dc9857"
+            ],
+            [
+                "9d0318c8133211a4",
+                "5b923ce703afedbd"
+            ]
+        ]
+    },
+    {
+        "id": "8b5f1f0e95e68ac5",
+        "type": "function",
+        "z": "6f3115410f519213",
+        "name": "Encerra Checkout",
+        "func": "global.set('validaCheckout', false);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d0318c8133211a4",
+        "type": "link out",
+        "z": "6f3115410f519213",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "754a66997f60640a"
+        ],
+        "x": 1015,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "6b9904d5fd771115",
+        "type": "comment",
+        "z": "6f3115410f519213",
+        "name": "Envia Request",
+        "info": "",
+        "x": 1080,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "44df962b8ff25166",
+        "type": "debug",
+        "z": "6f3115410f519213",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"entrada\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "c4703e2ac5dc9857",
+        "type": "debug",
+        "z": "6f3115410f519213",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Entrou no fluxo de parar checkout\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "5b923ce703afedbd",
+        "type": "debug",
+        "z": "6f3115410f519213",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"entrou no fluxo de checkin\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 360,
+        "wires": []
+    }
+]
