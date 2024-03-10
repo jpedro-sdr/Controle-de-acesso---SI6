@@ -1,15 +1,14 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 admin.initializeApp();
-const cors = require('cors')({ origin: true });
+const cors = require("cors")({ origin: true });
 const db = admin.firestore();
-const usuariosCollection = db.collection('usuarios');
+const usuariosCollection = db.collection("usuarios");
 
-const userId = '1';
+const userId = "1";
 
 exports.agendar = functions.https.onRequest(async (req, res) => {
   cors(req, res, async () => {
-
     try {
       const nomeUsuario = "João Pedro";
       let doc = await usuariosCollection.doc(userId).get();
@@ -49,28 +48,37 @@ exports.agendar = functions.https.onRequest(async (req, res) => {
         res.status(200).json({
           message: "Saída da sala registrada com sucesso",
           tempoRestante: tempoRestante,
+          dentro: false,
         });
       } else {
+        if (userData.tempoRestante <= 0)
+          res.status(403).json({
+            message: "O usuário não pode entrar na sala, pois não tem tempo.",
+            dentro: false,
+          });
+
         // Registra a entrada na sala
         await usuariosCollection.doc(userId).update({
           dentro: true,
           momentoEntrada: agora,
         });
 
-        res
-          .status(200)
-          .json({ message: "Entrada na sala registrada com sucesso" });
+        res.status(200).json({
+          message: "Entrada na sala registrada com sucesso",
+          dentro: true,
+        });
       }
     } catch (error) {
       console.error("Erro ao registrar entrada/saída na sala:", error);
-      res.status(500).json({ error: "Erro ao registrar entrada/saída na sala" });
+      res
+        .status(500)
+        .json({ error: "Erro ao registrar entrada/saída na sala" });
     }
-  })
+  });
 });
 
 exports.check = functions.https.onRequest(async (req, res) => {
   cors(req, res, async () => {
-
     try {
       let doc = await usuariosCollection.doc(userId).get();
 
@@ -99,7 +107,6 @@ exports.check = functions.https.onRequest(async (req, res) => {
             dentro: dentro,
             tempoRestante: tempoRestante,
           });
-
         } else {
           dentro = true;
         }
@@ -117,5 +124,5 @@ exports.check = functions.https.onRequest(async (req, res) => {
       console.error("Erro ao verificar tempo limite:", error);
       res.status(500).json({ error: "Erro ao verificar tempo limite" });
     }
-  })
+  });
 });
